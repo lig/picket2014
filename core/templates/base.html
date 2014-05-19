@@ -1,4 +1,4 @@
-{% load static i18n %}<!DOCTYPE HTML>
+{% load i18n %}<!DOCTYPE HTML>
 <html>
 
 <head>
@@ -7,6 +7,14 @@
 </head>
 
 <body>
+
+<header>
+    <nav>
+        <ul>
+            <li><a href="{% url 'create' %}">{% trans 'New issue' %}</a></li>
+        </ul>	   
+	</nav>
+</header>
 
 {% block content %}
 {% endblock content %}
