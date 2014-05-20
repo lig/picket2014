@@ -2,7 +2,8 @@ from django.utils.translation import ugettext_lazy as _
 from mongoengine.django.auth import make_password, check_password
 from mongoengine.django.utils import datetime_now
 from mongoengine.document import Document
-from mongoengine.fields import StringField, EmailField, DateTimeField
+from mongoengine.fields import (StringField, EmailField, DateTimeField,
+    BooleanField)
 
 
 class User(Document):
@@ -23,6 +24,7 @@ class User(Document):
     date_joined = DateTimeField(
         default=datetime_now,
         verbose_name=_('date joined'))
+    is_active = BooleanField(default=True)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['display_name']

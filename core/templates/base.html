@@ -4,21 +4,34 @@
 <head>
 <meta charset="utf-8"> 
 <title>{% block title %}Picket Bug Tracker{% endblock title %}</title>
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/uikit/2.6.0/css/uikit.almost-flat.min.css">
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/uikit/2.6.0/js/uikit.min.js"></script>
 </head>
 
 <body>
 
-<header>
-    <nav>
-        <ul>
+<header class="uk-container uk-container-center">
+	<nav class="uk-navbar uk-margin-small-top uk-margin-large-bottom">
+	    <a class="uk-navbar-brand" href="/">Picket</a>
+	    <ul class="uk-navbar-nav">
             <li><a href="{% url 'list' %}">{% trans 'Issues' %}</a></li>
-            <li><a href="{% url 'create' %}">{% trans 'New issue' %}</a></li>
-        </ul>	   
+	    </ul>
+	    <div class="uk-navbar-flip uk-navbar-content">
+            <a class="uk-button uk-button-danger" href="{% url 'create' %}">{% trans 'New issue' %}</a>
+	    </div>
 	</nav>
 </header>
 
+
+<div class="uk-container uk-container-center">
 {% block content %}
+<div class="uk-text-center"><div class="uk-align-center">
+{% block content-center %}
+{% endblock content-center %}
+</div></div>
 {% endblock content %}
+</div>
 
 </body>
 
