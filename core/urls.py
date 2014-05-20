@@ -4,5 +4,5 @@ from .views import IssueView
 
 
 urlpatterns = patterns('',
-    url(r'^$', include(IssueView.urls)),
+    url(r'^', include(IssueView.urls)),
 )

@@ -1,4 +1,5 @@
-from actionviews import TemplateView
+from actionviews import ActionResponse, TemplateView
+from django.shortcuts import redirect
 
 from .documents import Issue
 from .forms import IssueForm
@@ -6,7 +7,7 @@ from .forms import IssueForm
 
 class IssueView(TemplateView):
 
-    def do_list(self: ''):
+    def do_list(self:'', page:r'\d+'=1):
         return {'issues': Issue.objects.all()}
 
     def do_create(self):
@@ -18,6 +19,7 @@ class IssueView(TemplateView):
             if form.is_valid():
                 issue = Issue(**form.cleaned_data)
                 issue.save()
+                raise ActionResponse(redirect('list'))
 
         else:
             form = IssueForm()
