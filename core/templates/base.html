@@ -17,9 +17,25 @@
 	    <ul class="uk-navbar-nav">
             <li><a href="{% url 'list' %}">{% trans 'Issues' %}</a></li>
 	    </ul>
-	    <div class="uk-navbar-flip uk-navbar-content">
+	    {% if user.is_authenticated %}
+        <ul class="uk-navbar-flip uk-navbar-nav">
+            <li class="uk-parent" data-uk-dropdown>
+                <a href="{# url 'profile' #}">{{ user.display_name }}</a>
+                <div class="uk-dropdown uk-dropdown-navbar">
+                    <ul class="uk-nav uk-nav-navbar">
+                        <li><a href="{% url 'logout' %}">{% trans 'Logout' %}</a></li>
+                    </ul>
+                </div>
+            </li>
+        </ul>
+        {% else %}
+        <ul class="uk-navbar-flip uk-navbar-nav">
+            <li><a href="{% url 'login' %}">{% trans 'Login' %}</a></li>
+        </ul>
+        {% endif %}
+        <div class="uk-navbar-flip uk-navbar-content">
             <a class="uk-button uk-button-danger" href="{% url 'create' %}">{% trans 'New issue' %}</a>
-	    </div>
+        </div>
 	</nav>
 </header>
 
