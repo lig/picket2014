@@ -20,8 +20,10 @@ class IssueView(TemplateView):
             form = IssueForm(request.POST)
 
             if form.is_valid():
-                issue = Issue(**form.cleaned_data)
-                issue.creator = request.user
+                issue = Issue(
+                    subject=form.cleaned_data['subject'],
+                    creator=request.user,
+                    comments=[form.cleaned_data['text']])
                 issue.save()
                 raise ActionResponse(redirect('list'))
 
