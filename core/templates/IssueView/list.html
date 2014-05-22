@@ -3,8 +3,16 @@
 
 {% block content %}
 
-{% for issue in issues %}
-<p>{{ issue }}</p>
+<div class="uk-grid">
+{% for x in '3210'|make_list %}
+    <div class="uk-width-1-4">
+    {% for issue in issues %}
+        {% if forloop.counter|add:x|divisibleby:4 %}
+            {% include 'issue_panel.html' %}
+        {% endif %}
+    {% endfor %}
+    </div>
 {% endfor %}
+</div>
 
 {% endblock content %}
