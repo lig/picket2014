@@ -1,0 +1,27 @@
+{% extends 'base.html' %}{% load i18n tz %}
+
+
+{% block content %}
+
+<article class="uk-article">
+    <h1 class="uk-article-title">#{{ issue.id }}: {{ issue.subject }}</h1>
+    <ul class="uk-article-meta uk-subnav uk-subnav-line">
+        <li><a href="{% url 'user' issue.creator.id %}">{{ issue.creator }}</a></li>
+        <li data-uk-tooltip title="{{ issue.created }}">{% blocktrans with issue_created=issue.created|timesince %}Created {{ issue_created }} ago{% endblocktrans %}</li>
+        <li data-uk-tooltip title="{{ issue.modified }}">{% blocktrans with issue_modified=issue.modified|timesince %}Modified {{ issue_modified }} ago{% endblocktrans %}</li>
+    </ul>
+    {% for comment in issue.comments %}
+    {% if forloop.first %}
+    <p class="uk-article-lead">{{ comment }}</p>
+    <ul class="uk-comment-list">
+    {% endif %}
+		<article class="uk-comment">
+		    <div class="uk-comment-body">{{ comments }}</div>
+		</article>
+    {% if forloop.last %}
+    </ul>
+    {% endif %}
+    {% endfor %}
+</article>
+
+{% endblock content %}

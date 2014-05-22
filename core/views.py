@@ -5,6 +5,7 @@ from django.shortcuts import redirect
 
 from .documents import Issue
 from .forms import IssueForm
+from mongoengine.django.shortcuts import get_document_or_404
 
 
 class IssueView(TemplateView):
@@ -31,3 +32,6 @@ class IssueView(TemplateView):
             form = IssueForm()
 
         return {'form': form}
+
+    def do_issue(self, n:r'\d+'):
+        return {'issue': get_document_or_404(Issue, id=int(n))}

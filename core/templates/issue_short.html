@@ -1,7 +1,8 @@
 {% load i18n tz %}
+
 <article class="uk-comment">
     <header class="uk-comment-header">
-        <h4 class="uk-comment-title">#{{ issue.id }}: {{ issue.subject }}</h4>
+        <h4 class="uk-comment-title">#{{ issue.id }}: <a href="{% url 'issue' issue.id %}">{{ issue.subject }}</a></h4>
 		<ul class="uk-comment-meta uk-subnav uk-subnav-line">
             <li data-uk-tooltip title="{{ issue.created }}">{% blocktrans with issue_created=issue.created|timesince %}Created {{ issue_created }} ago{% endblocktrans %}</li>
             <li data-uk-tooltip title="{{ issue.modified }}">{% blocktrans with issue_modified=issue.modified|timesince %}Modified {{ issue_modified }} ago{% endblocktrans %}</li>

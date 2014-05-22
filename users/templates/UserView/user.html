@@ -1,0 +1,13 @@
+{% extends 'base.html' %}{% load i18n %}
+
+
+{% block content %}
+
+<article class="uk-article">
+    <h1 class="uk-article-title">{{ profile }}</h1>
+    <p class="uk-article-meta">{{ profile.last_login|timesince }} {% trans 'since last login' %}</p>
+    <p class="uk-article-meta">{{ profile.date_joined|timesince }} {% trans 'since date joined' %}</p>
+</article>
+
+
+{% endblock content %}
