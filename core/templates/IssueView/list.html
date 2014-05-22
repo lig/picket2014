@@ -1,18 +1,14 @@
-{% extends 'base.html' %}
+{% extends 'base.html' %}{% load i18n %}
 
 
 {% block content %}
 
-<div class="uk-grid">
-{% for x in '3210'|make_list %}
-    <div class="uk-width-1-4">
-    {% for issue in issues %}
-        {% if forloop.counter|add:x|divisibleby:4 %}
-            {% include 'issue_panel.html' %}
-        {% endif %}
-    {% endfor %}
-    </div>
+<h1>{% trans 'Issues' %}</h1>
+
+<ul class="uk-comment-list">
+{% for issue in issues %}
+<li>{% include 'issue_short.html' %}</li>
 {% endfor %}
-</div>
+</ul>
 
 {% endblock content %}
