@@ -1,11 +1,11 @@
-from actionviews import ActionResponse, TemplateView
+from actionviews import TemplateView
 from actionviews.decorators import action_decorator, child_view
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
 from mongoengine.django.shortcuts import get_document_or_404
 
 from .documents import Issue, Project
-from .forms import IssueForm, ProjectForm
+from .forms import IssueForm, ProjectForm, CommentForm
 
 
 class IssueView(TemplateView):
@@ -22,6 +22,12 @@ class IssueView(TemplateView):
     def do_list(self:'', page:r'\d+'=1):
         issues = self.get_queryset()
         return {'issues': issues}
+
+    def do_issue(self, n:r'\d+'):
+        return {
+            'issue': get_document_or_404(Issue, id=int(n)),
+            'comment_form': CommentForm(),
+        }
 
     @action_decorator(login_required)
     def do_create(self):
@@ -47,8 +53,19 @@ class IssueView(TemplateView):
 
         return {'form': form}
 
-    def do_issue(self, n:r'\d+'):
-        return {'issue': get_document_or_404(Issue, id=int(n))}
+    @action_decorator(login_required)
+    def do_comment(self, issue:r'\d+'):
+        request = self.request
+        issue = self.do_issue(issue)['issue']
+
+        if request.method == 'POST':
+            form = CommentForm(request.POST)
+
+            if form.is_valid():
+                issue.comments.append(form.cleaned_data['text'])
+                issue.save()
+
+        return redirect(issue.get_absolute_url())
 
 
 class ProjectView(TemplateView):

@@ -13,16 +13,25 @@
     </ul>
     {% for comment in issue.comments %}
     {% if forloop.first %}
-    <p class="uk-article-lead">{{ comment }}</p>
+    <p class="uk-article-lead">{{ comment|linebreaksbr }}</p>
+    <hr class="uk-article-divider">
     <ul class="uk-comment-list">
+    {% else %}
+        <li><article class="uk-comment">
+            <p class="uk-comment-body">{{ comment|linebreaksbr }}</p>
+            <hr class="uk-article-divider">
+        </article></li>
     {% endif %}
-		<article class="uk-comment">
-		    <div class="uk-comment-body">{{ comments }}</div>
-		</article>
     {% if forloop.last %}
     </ul>
     {% endif %}
     {% endfor %}
+    {% if user.is_authenticated %}
+    <form class="uk-form uk-form-large" method="post" action="{% url 'comment' issue.id %}">{% csrf_token %}
+    {{ comment_form.as_p }}
+    <p><input class="uk-button uk-button-success" type="submit"></p>
+    </form>
+    {% endif %}
 </article>
 
 {% endblock content %}

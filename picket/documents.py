@@ -1,5 +1,6 @@
 from datetime import datetime
 
+from django.db.models import permalink
 from mongoengine.document import Document
 from mongoengine.fields import (SequenceField, StringField, ListField,
     ReferenceField, DateTimeField)
@@ -33,6 +34,10 @@ class Issue(Document):
 
     def __str__(self):
         return '#{}: {}'.format(self.id, self.subject)
+
+    @permalink
+    def get_absolute_url(self):
+        return ('issue', (), {'project': self.project.id, 'n': self.id})
 
     def save(self, *args, **kwargs):
         self.modified = datetime.utcnow()

@@ -3,6 +3,11 @@ from django import forms
 from .documents import Project
 
 
+class ProjectForm(forms.Form):
+
+    name = forms.CharField()
+
+
 class IssueForm(forms.Form):
 
     project = forms.ModelChoiceField(queryset=Project.objects.all())
@@ -10,6 +15,6 @@ class IssueForm(forms.Form):
     text = forms.CharField(required=False, widget=forms.Textarea)
 
 
-class ProjectForm(forms.Form):
+class CommentForm(forms.Form):
 
-    name = forms.CharField()
+    text = forms.CharField(required=False, widget=forms.Textarea)
