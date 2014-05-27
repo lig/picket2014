@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+
+{% block content-center %}
+
+<form class="uk-form uk-form-large" method="post" action="">{% csrf_token %}
+{{ form.as_p }}
+<p><input class="uk-button uk-button-success" type="submit"></p>
+</form>
+
+{% endblock content-center %}

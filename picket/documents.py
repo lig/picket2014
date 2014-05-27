@@ -7,6 +7,17 @@ from mongoengine.fields import (SequenceField, StringField, ListField,
 from users.documents import User
 
 
+class Project(Document):
+    meta = {
+        'ordering': ['name']
+    }
+
+    name = StringField(required=True, unique=True)
+
+    def __str__(self):
+        return self.name
+
+
 class Issue(Document):
     meta = {
         'ordering': ['-id']
@@ -14,6 +25,7 @@ class Issue(Document):
 
     id = SequenceField(primary_key=True)
     subject = StringField(required=True)
+    project = ReferenceField(Project, required=True)
     creator = ReferenceField(User)
     comments = ListField(StringField())
     created = DateTimeField(default=lambda: datetime.utcnow())

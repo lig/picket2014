@@ -20,10 +20,29 @@ html {
 	<nav class="uk-navbar uk-margin-small-top uk-margin-large-bottom">
 	    <a class="uk-navbar-brand" href="/">Picket</a>
 	    <ul class="uk-navbar-nav">
-            <li><a href="{% url 'list' %}">{% trans 'Issues' %}</a></li>
+            <li class="uk-parent" data-uk-dropdown="{mode:'click'}">
+                <a>{% trans 'Projects' %}</a>
+                <div class="uk-dropdown uk-dropdown-navbar">
+                    <ul class="uk-nav uk-nav-navbar">
+                        {% for p in projects %}
+                        <li><a href="{% url 'list' p.id %}">{{ p.name }}</a></li>
+                        {% endfor %}
+                        <li class="uk-nav-divider"></li>
+                        <li><a href="{% url 'project_create' %}"><i class="uk-icon-plus"></i> {% trans 'Create project' %}</a></li>
+                    </ul>
+                </div>
+            </li>
+            {% if project %}
+            <li><a href="{% url 'list' project.id %}">{% blocktrans with project_name=project.name %}{{ project_name }} issues{% endblocktrans %}</a></li>
+            {% endif %}
 	    </ul>
         <div class="uk-navbar-flip uk-navbar-content">
-            <a class="uk-button uk-button-danger" href="{% url 'create' %}">{% trans 'New issue' %}</a>
+            {% if project %}
+            {% url 'create' project.id as url_create %}
+            {% else %}
+            {% url 'create' as url_create %}
+            {% endif %}
+            <a class="uk-button uk-button-danger" href="{{ url_create }}">{% trans 'New issue' %}</a>
         </div>
 	    {% if user.is_authenticated %}
         <ul class="uk-navbar-flip uk-navbar-nav">

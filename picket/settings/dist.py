@@ -41,7 +41,6 @@ ROOT_URLCONF = 'picket.urls'
 
 WSGI_APPLICATION = 'picket.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/dev/ref/settings/#databases
 
@@ -50,6 +49,15 @@ DATABASES = {
         'ENGINE': 'django.db.backends.dummy'
     }
 }
+
+# List of processors used by RequestContext to populate the context.
+# Each one should be a callable that takes the request object as its
+# only parameter and returns a dictionary to add to the context.
+from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS
+TEMPLATE_CONTEXT_PROCESSORS += (
+    'picket.context_processors.projects',
+)
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/dev/topics/i18n/
